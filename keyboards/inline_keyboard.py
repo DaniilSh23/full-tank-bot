@@ -5,7 +5,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from keyboards.callback_data_bot import callback_for_next_or_prev_button, \
     callback_for_items_by_category, callback_for_category, \
     callback_for_add_item_to_basket, callback_back_to_categories, \
-    callback_for_minus_plus_button, callback_for_basket_and_order, callback_for_orders_lst
+    callback_for_minus_plus_button, callback_for_orders_lst, callback_for_stuff
 from settings.config import KEYBOARD, RE_CATEGORY_LINK_PATTERN
 
 
@@ -233,27 +233,39 @@ def order_formation_inline(order_id, chat_id, message_id):
                     message_id=message_id,
                 )
             ),
+        ],
+        [
+            InlineKeyboardButton(
+                text=KEYBOARD['PAY'],
+                callback_data=callback_for_orders_lst.new(
+                    flag='pay_order',
+                    order_id=order_id,
+                    chat_id=chat_id,
+                    message_id=message_id,
+                )
+            ),
         ]
     ])
     return inline_keyboard
 
 
+def stuff_formation_order_complete_inline(order_id, chat_id, message_id):
+    '''Формирователь клавиатуры для персонала с кнопкой выполненного заказа.'''
 
-# # делаем кнопку для описания товара
-# item_description_inline_button = InlineKeyboardButton(
-#     text=' '.join([emojize(':hamburger:'), description]),
-#     callback_data=callback_for_items_by_category.new(
-#         item_id=i_item['id'],
-#         message_id=message_id
-#     )
-# )
-# inline_keyboard.insert(item_description_inline_button)
-#
-# # кнопка добавления в корзину и заодно разделитель
-# delimeter_inline_button = InlineKeyboardButton(
-#     text=emojize(":pig: :pig: :pig: Добавить в корзину :pig: :pig: :pig:"),
-#     callback_data=callback_for_items_by_category.new(
-#         item_id=i_item['id'],
-#         message_id=message_id
-#     ))
-# inline_keyboard.insert(delimeter_inline_button)
+    inline_keyboard = InlineKeyboardMarkup(row_width=1, inline_keyboard=[
+        [
+            InlineKeyboardButton(
+                text=KEYBOARD['ORDER_COMPLETE'],
+                callback_data=callback_for_stuff.new(
+                    flag='order_complete',
+                    order_id=order_id,
+                    chat_id=chat_id,
+                    message_id=message_id,
+                )
+            )
+        ],
+    ]
+    )
+
+    return inline_keyboard
+

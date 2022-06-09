@@ -30,9 +30,6 @@ BASKET_KEYBRD = ReplyKeyboardMarkup(
             KeyboardButton(text=KEYBOARD['HEAD_PAGE']),
             KeyboardButton(text=KEYBOARD['X_BASKET']),
         ],
-        [
-            KeyboardButton(text=KEYBOARD['MY_ORDER']),
-        ],
     ],
     resize_keyboard=True    # это, чтобы клавиатура не занимала пол экрана
 )
@@ -60,11 +57,8 @@ COMMON_KEYBRD = ReplyKeyboardMarkup(
             KeyboardButton(text=KEYBOARD['CHOOSE_GOODS']),
         ],
         [
-            KeyboardButton(text=KEYBOARD['MY_ORDER']),
-            KeyboardButton(text=KEYBOARD['BASKET']),
-        ],
-        [
             KeyboardButton(text=KEYBOARD['HEAD_PAGE']),
+            KeyboardButton(text=KEYBOARD['BASKET']),
         ],
     ],
     resize_keyboard=True

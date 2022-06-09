@@ -2,7 +2,7 @@ import aiohttp
 from loguru import logger
 from settings.config import ITEMS_CATEGORIES_API_URL, ITEMS_LST_API_URL, ITEMS_DETAIL_API_URL, \
     ADD_ITEMS_IN_BASKET_API_URL, BASKET_API_URL, REMOVE_ITEMS_FROM_BASKET_API_URL, CLEAR_BASKET_API_URL, ORDERS_API_URL, \
-    REMOVE_ORDER_API_URL
+    REMOVE_ORDER_API_URL, PAY_ORDER_INFO, ORDER_ARCHIVE
 
 
 @logger.catch
@@ -78,6 +78,7 @@ async def remove_item_from_basket(user_tlg_id, item_id):
                     return await response.json()
 
 
+@logger.catch
 async def get_user_basket(user_tlg_id, items_id=None):
     '''Запрос для получения товаров в корзине пользователя.'''
 
@@ -90,6 +91,7 @@ async def get_user_basket(user_tlg_id, items_id=None):
             return response
 
 
+@logger.catch
 async def clear_basket(user_tlg_id):
     '''Запрос для очистки корзины пользователя'''
 
@@ -100,19 +102,30 @@ async def clear_basket(user_tlg_id):
                 return response.status
 
 
-async def get_info_about_orders(user_tlg_id):
-    '''Запрос для получения списка заказов.'''
+@logger.catch
+async def get_info_about_orders(user_tlg_id=None, order_id=None):
+    '''Запрос для получения заказов.'''
 
-    req_link = ''.join([ORDERS_API_URL, f'?user_tlg_id={user_tlg_id}'])
-    async with aiohttp.ClientSession() as session:
-        async with session.get(req_link) as response:
-            async with response:
-                if response.status == 200:
-                    return await response.json()
-                elif response.status == 400:
-                    return 400
+    if user_tlg_id:
+        req_link = ''.join([ORDERS_API_URL, f'?user_tlg_id={user_tlg_id}'])
+    elif order_id:
+        req_link = ''.join([ORDERS_API_URL, f'?order_id={order_id}'])
+    else:
+        raise Exception('Не переданы параметры для запроса.')
+
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(req_link) as response:
+                async with response:
+                    if response.status == 200:
+                        return await response.json()
+                    elif response.status == 400:
+                        return 400
+    except Exception as error:
+        logger.info(f'Запрос к API не удался. {error}')
 
 
+@logger.catch
 async def req_for_remove_order(order_id):
     '''Запрос для удаления заказа.'''
 
@@ -126,6 +139,7 @@ async def req_for_remove_order(order_id):
                     return 400
 
 
+@logger.catch
 async def post_req_for_add_order(order_data):
     '''POST запрос для внесения данных о заказе и получение ответа в виде этого же заказа.'''
 
@@ -133,43 +147,36 @@ async def post_req_for_add_order(order_data):
     async with aiohttp.ClientSession() as session:
         async with session.post(url=req_link, data=order_data) as response:
             async with response:
-                if response.status == 201:
+                if response.status == 200:
                     print(f'Ответ сервера: {await response.json()}')
                     return await response.json()
                 else:
                     return 400
 
 
-##################################
 @logger.catch
-async def get_works_list(category_id=None):
-    '''Запрос для получения списка выполненных работ по данной категории.'''
-    async with aiohttp.ClientSession() as session:
-        if category_id:
-            req_url = ''.join([COMPLETED_WORKS_LST_API_URL,'?id=', category_id])
-        else:
-            req_url = COMPLETED_WORKS_LST_API_URL
-        async with session.get(req_url) as response:
-            return await response.json()
+async def post_req_for_add_pay_info_about_order(pay_order_data):
+    '''POST запрос для создания в БД записи о данных оплаченного заказа.'''
 
-
-@logger.catch
-async def get_detail_info_about_work(work_id):
-    '''Запрос для получения детальной информации о выполненной работе.'''
+    req_link = ''.join([PAY_ORDER_INFO])
     async with aiohttp.ClientSession() as session:
-        async with session.get(''.join([COMPLETED_WORK_DETAIL_API_URL, work_id])) as response:
-            return await response.json()
-            # data = await response.read()
-            # return  json.loads(data)
+        async with session.post(url=req_link, data=pay_order_data) as response:
+            async with response:
+                if response.status == 200:
+                    return True
+                else:
+                    return False
 
 
 @logger.catch
-async def post_create_new_application(tlg_user_id, tlg_user_name, application_text):
-    '''Запрос для создания новой заявки в БД'''
+async def post_req_for_add_order_to_archive(order_data):
+    '''POST запрос для добавления заказа в архив.'''
+
+    req_link = ''.join([ORDER_ARCHIVE])
     async with aiohttp.ClientSession() as session:
-        async with session.post(
-                CREATE_NEW_APPLICATION_API_URL,
-                headers={'Content-Type': 'application/json'},
-                json={'tlg_user_id': tlg_user_id, 'tlg_user_name': tlg_user_name, 'application_text': application_text}
-        ) as response:
-            return await response.json()
+        async with session.post(url=req_link, data=order_data) as response:
+            async with response:
+                if response.status == 200:
+                    return True
+                else:
+                    return False

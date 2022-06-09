@@ -12,7 +12,8 @@ TOKEN = os.getenv('TOKEN')
 PAY_TOKEN = os.getenv('PAY_TOKEN')
 
 # Телеграм ID админов
-ADMIN_ID = [1978587604]
+ADMINS_ID_LST = [1978587604]
+STAFF_ID = 1978587604
 
 # абсолютный путь до текущей директории этого файла
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -24,7 +25,7 @@ KEYBOARD = {
     'CHOOSE_GOODS': emojize(':hamburger: Выбрать товар'),
     'INFO': emojize(':speech_balloon: О магазине'),
     'BASKET': emojize(':wastebasket: Корзина'),
-    'MY_ORDER': emojize(':spiral_notepad: Мой заказ'),
+    'MY_ORDER': emojize(':spiral_notepad: Мои заказы'),
     'HEAD_PAGE': emojize(":house_with_garden: Главная"),
     'MAKE_AN_ORDER': emojize('✅ ОФОРМИТЬ'),
     'ORDER_COMPLETE': emojize('✅ ЗАКАЗ ВЫПОЛНЕН'),
@@ -37,32 +38,8 @@ KEYBOARD = {
     'PLUS_ITEM': emojize(':plus:'),
     'MINUS_ITEM': emojize(':minus:'),
     'STANDARD_BUTTON': emojize(':fuel_pump:'),
-    'PAY': 'Оплатить'
-
-    # 'SETTINGS': emojize('⚙️ Настройки'),
-    # 'SEMIPRODUCT': emojize(':pizza: Полуфабрикаты'),
-    # 'GROCERY': emojize(':bread: Бакалея'),
-    # 'ICE_CREAM': emojize(':shaved_ice: Мороженое'),
-    # '<<': emojize('⏪'),
-    # '>>': emojize('⏩'),
-    # 'DOUWN': emojize('🔽'),
-    # 'AMOUNT_PRODUCT': COUNT,
-    # 'AMOUNT_ORDERS': COUNT,
-    # 'UP': emojize('🔼'),
-    # 'COPY': '©️',
-    #
-    # 'APPLICATION': emojize(':writing_hand:Заявка'),
-    # 'CATEGORY': emojize(':racing_car:  Категории работ'),
-    # 'CONTACTS': emojize(':mobile_phone: Контакты'),
-    # 'WORK_LIST': emojize(':rescue_worker’s_helmet: Наши работы'),
-    # 'CANCEL_SEND': emojize('❌'),
-}
-
-# id категорий продуктов
-CATEGORY = {
-    'SEMIPRODUCT': 1,
-    'GROCERY': 2,
-    'ICE_CREAM': 3,
+    'PAY': emojize(':yen_banknote:ОПЛАТИТЬ'),
+    'ORDER_GIVEN': emojize(':package:ЗАКАЗ ПЕРЕДАН'),
 }
 
 # названия команд
@@ -82,6 +59,8 @@ ORDERS_API_URL = f'{DOMAIN_NAME}orders/'
 REMOVE_ORDER_API_URL = f'{DOMAIN_NAME}remove_order/'
 CLEAR_BASKET_API_URL = f'{DOMAIN_NAME}clear_basket/'
 ITEMS_DETAIL_API_URL = f'{DOMAIN_NAME}item_detail/?item_id='
+PAY_ORDER_INFO = f'{DOMAIN_NAME}pay_order/'
+ORDER_ARCHIVE = f'{DOMAIN_NAME}order_archive/'
 
 # объекты: бот, диспатчер, сторэдж для машины состояний
 BOT = Bot(token=TOKEN, parse_mode='HTML')

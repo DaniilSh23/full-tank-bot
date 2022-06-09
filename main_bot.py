@@ -5,7 +5,8 @@ from handlers.basket import register_basket_handlers
 from handlers.head_page import register_head_page_handlers
 from handlers.items_menu import register_items_menu_handlers
 from handlers.order import register_orders_handlers
-from handlers.payment import register_payments_handlers
+from handlers.payment import register_payment_handlers
+from handlers.stuff import register_staff_handlers
 from middlewares.throttling_middleware import ThrottlingMiddleware
 from settings.config import BOT, DP
 
@@ -22,7 +23,8 @@ def register_all_handlers():
     register_items_menu_handlers()
     register_basket_handlers()
     register_orders_handlers()
-    register_payments_handlers()
+    register_payment_handlers()
+    register_staff_handlers()
 
 
 @logger.catch
