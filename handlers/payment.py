@@ -33,6 +33,7 @@ async def payments(call: CallbackQuery, callback_data: dict):
                                        f'<b>Срок действия</b>:  	<tg-spoiler>2024/12</tg-spoiler>\n'
                                        f'<b>Код:</b>  	<tg-spoiler>123</tg-spoiler>\n'
                                        f'<b>Код подтверждения платежа:</b>  	<tg-spoiler> 12345678</tg-spoiler>\n')
+        await call.message.answer(text=f'PAY_TOKEN: {PAY_TOKEN}')
         # высылаем платёж
         await BOT.send_invoice(
             chat_id=callback_data['chat_id'],

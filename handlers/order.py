@@ -121,13 +121,6 @@ async def add_order(message: types.Message):
         inline_keyboard = order_formation_inline(order_id, chat_id, message_id)
         await i_message.edit_text(text=text_for_message, reply_markup=inline_keyboard)
 
-        # 'user_tlg_id': request.data.get('user_tlg_id'),
-        # 'pay_status': request.data.get('pay_status'),
-        # 'execution_status': request.data.get('execution_status'),
-        # 'order_items': request.data.get('order_items'),
-        # 'result_orders_price': request.data.get('result_orders_price'),
-
-
 def register_orders_handlers():
     DP.register_message_handler(my_order, Text(equals=KEYBOARD['X_ORDER']))
     DP.register_callback_query_handler(remove_order, callback_for_orders_lst.filter(flag='remove_order'))
