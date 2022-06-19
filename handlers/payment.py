@@ -10,7 +10,7 @@ from settings.config import DP, PAY_TOKEN, BOT, DELIVERY_FROM_CAFE, PICKUP_FROM_
 
 async def payments(call: CallbackQuery, callback_data: dict):
     '''Обработчик платежей.'''
-    call.message.answer(text=f'{PAY_TOKEN}')
+
     order_id = callback_data['order_id']
     # выполняем запрос к БД на получение данного заказа
     response = await get_info_about_orders(order_id=order_id)
