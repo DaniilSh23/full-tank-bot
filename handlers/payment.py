@@ -27,7 +27,12 @@ async def payments(call: CallbackQuery, callback_data: dict):
     price = types.LabeledPrice(label=f'Заказ № {response_order_id}', amount=int(result_orders_price * 100))
     # проверяем, что мы работаем с тестовой версией платежей
     if PAY_TOKEN.split(':')[1] == 'TEST':
-        await call.message.answer(text='Это тестовый платёж.')
+        await call.message.answer(text='<b><ins>Это тестовый платёж.</ins></b>\n\n'
+                                       f'<b>{emojize(":credit_card:")}Данные тестовые карты, которые можно использовать для проверки:</b>\n\n'
+                                       f'<b>Номер карты</b>:  	<tg-spoiler>2200 0000 0000 0053</tg-spoiler>\n'
+                                       f'<b>Срок действия</b>:  	<tg-spoiler>2024/12</tg-spoiler>\n'
+                                       f'<b>Код:</b>  	<tg-spoiler>123</tg-spoiler>\n'
+                                       f'<b>Код подтверждения платежа:</b>  	<tg-spoiler> 12345678</tg-spoiler>\n')
         # высылаем платёж
         await BOT.send_invoice(
             chat_id=callback_data['chat_id'],
@@ -111,7 +116,7 @@ async def process_successful_payment(message: types.Message):
     response = await post_req_for_add_pay_info_about_order(pay_order_data=pay_order_data)
     if response:
         for i_admin in ADMINS_ID_LST:
-            await BOT.send_message(chat_id=i_admin, text=f'{emojize(":robot:")} Поступил новый платёж из {emojize(":oil_drum:")}Полного бака')
+            await BOT.send_message(chat_id=i_admin, text=f'{emojize(":robot:")} Поступил новый платёж из {emojize(":bellhop_bell:")}Вашего кафе')
 
     # получаем сперва этот заказа
     this_fu_order = await get_info_about_orders(order_id=order_id)

@@ -8,8 +8,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # токен выдается при регистрации приложения
-TOKEN = os.getenv('TOKEN')
-PAY_TOKEN = os.getenv('PAY_TOKEN')
+TOKEN = os.environ.get('TOKEN', '5265303938:AAE1daGp-VJR0R15J9tHksR38hQlbCXMYdU')
+PAY_TOKEN = os.environ.get('PAY_TOKEN')
 
 # Телеграм ID админов
 ADMINS_ID_LST = [1978587604]
@@ -49,18 +49,19 @@ COMMANDS = {
 }
 
 # URL адреса для запросов к АPI бота
-DOMAIN_NAME = 'http://127.0.0.1:8000/api/'
-ITEMS_CATEGORIES_API_URL = f'{DOMAIN_NAME}categories/'
-ITEMS_LST_API_URL = f'{DOMAIN_NAME}items/'
-BASKET_API_URL = f'{DOMAIN_NAME}basket/'
-ADD_ITEMS_IN_BASKET_API_URL = f'{DOMAIN_NAME}add_items_in_basket/'
-REMOVE_ITEMS_FROM_BASKET_API_URL = f'{DOMAIN_NAME}remove_items_from_basket/'
-ORDERS_API_URL = f'{DOMAIN_NAME}orders/'
-REMOVE_ORDER_API_URL = f'{DOMAIN_NAME}remove_order/'
-CLEAR_BASKET_API_URL = f'{DOMAIN_NAME}clear_basket/'
-ITEMS_DETAIL_API_URL = f'{DOMAIN_NAME}item_detail/?item_id='
-PAY_ORDER_INFO = f'{DOMAIN_NAME}pay_order/'
-ORDER_ARCHIVE = f'{DOMAIN_NAME}order_archive/'
+DOMAIN_NAME = 'https://auto-bot-api.herokuapp.com/'
+ITEMS_CATEGORIES_API_URL = f'{DOMAIN_NAME}cafe_api/categories/'
+ITEMS_LST_API_URL = f'{DOMAIN_NAME}cafe_api/items/'
+BASKET_API_URL = f'{DOMAIN_NAME}cafe_api/basket/'
+ADD_ITEMS_IN_BASKET_API_URL = f'{DOMAIN_NAME}cafe_api/add_items_in_basket/'
+REMOVE_ITEMS_FROM_BASKET_API_URL = f'{DOMAIN_NAME}cafe_api/remove_items_from_basket/'
+ORDERS_API_URL = f'{DOMAIN_NAME}cafe_api/orders/'
+REMOVE_ORDER_API_URL = f'{DOMAIN_NAME}cafe_api/remove_order/'
+CLEAR_BASKET_API_URL = f'{DOMAIN_NAME}cafe_api/clear_basket/'
+ITEMS_DETAIL_API_URL = f'{DOMAIN_NAME}cafe_api/item_detail/?item_id='
+PAY_ORDER_INFO = f'{DOMAIN_NAME}cafe_api/pay_order/'
+ORDER_ARCHIVE = f'{DOMAIN_NAME}cafe_api/order_archive/'
+ADMIN_PANEL = f'{DOMAIN_NAME}admin/'
 
 # объекты: бот, диспатчер, сторэдж для машины состояний
 BOT = Bot(token=TOKEN, parse_mode='HTML')
