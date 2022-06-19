@@ -20,7 +20,9 @@ def category_item_formation_keyboard(response_data, message_id):
         # emojize(':pig:'), emojize(':pig_face:'), emojize(':pig_nose:'),
         # emojize(':cow:'), emojize(':cow_face:'), emojize(':ewe:'),
         # emojize(':ram:'), emojize(':deer:'), emojize(':chicken:'),
-        emojize(':woman_cook:'), emojize(':cook:'), emojize(':fork_and_knife_with_plate:'),
+        emojize(':woman_cook:'),
+        emojize(':cook:'),
+        # emojize(':fork_and_knife_with_plate:'),
     ]
     for i_res_dct in results_in_page:
         category_id = i_res_dct['id']
