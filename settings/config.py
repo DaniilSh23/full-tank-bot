@@ -9,7 +9,7 @@ load_dotenv()
 
 # токен выдается при регистрации приложения
 TOKEN = os.environ.get('TOKEN', '5265303938:AAE1daGp-VJR0R15J9tHksR38hQlbCXMYdU')
-PAY_TOKEN = os.environ.get('PAY_TOKEN')
+PAY_TOKEN = os.environ.get('PAY_TOKEN', '1232131')
 
 # Телеграм ID админов
 ADMINS_ID_LST = [1978587604]
